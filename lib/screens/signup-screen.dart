@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../services/api_service.dart'; // API service for backend calls
+import '../api_service.dart'; // API service for backend calls
 import 'login-screen.dart'; // Navigate to Login Screen after signup
 
 class SignupScreen extends StatefulWidget {
