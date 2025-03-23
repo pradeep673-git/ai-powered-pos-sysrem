@@ -2,8 +2,8 @@ from fastapi import FastAPI, HTTPException, Depends
 from sqlalchemy.orm import Session
 from pydantic import BaseModel, EmailStr
 from passlib.context import CryptContext
-from .models import Base, User
-from .database import engine, get_db
+from models import Base, User
+from database import engine, get_db
 
 app = FastAPI()
 
