@@ -1,25 +1,25 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from fastapi_backend.database import get_db  # Adjusted import path
-from fastapi_backend import models, schemas  # Adjusted import path
+from database import get_db  # Ensure this points to your database setup file
+from models import User      # Ensure this points to your User model
+from schemas import UserSignup  # Ensure this points to your Pydantic schema for signup
 from passlib.context import CryptContext
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
-# Initialize the password context for hashing
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-@router.post("/signup", response_model=schemas.UserSignup)
-async def create_user(user: schemas.UserSignup, db: Session = Depends(get_db)):
-    db_user = db.query(models.User).filter(models.User.email == user.email).first()
+@router.post("/signup", response_model=UserSignup)
+async def create_user(user: UserSignup, db: Session = Depends(get_db)):
+    db_user = db.query(User).filter(User.email == user.email).first()
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
     
-    hashed_password = pwd_context.hash(user.password)  # Hash the password
-    db_user = models.User(name=user.name, email=user.email, password=hashed_password)  # Include name here
+    hashed_password = pwd_context.hash(user.password)
+    new_user = User(name=user.name, email=user.email, password=hashed_password)
     
-    db.add(db_user)
+    db.add(new_user)
     db.commit()
-    db.refresh(db_user)
+    db.refresh(new_user)
     
-    return {"message": f"User {db_user.name} created successfully"}
+    return new_user

@@ -6,4 +6,4 @@ class UserSignup(BaseModel):
     password: str
 
     class Config:
-        orm_mode = True
+        orm_mode = True  # Allows compatibility with SQLAlchemy models.
