@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from database import get_db
-from . import models, schemas
+from fastapi_backend import models, schemas
 from passlib.context import CryptContext
 
 router = APIRouter(prefix="/auth", tags=["auth"])
