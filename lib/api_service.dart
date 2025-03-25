@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static const String baseUrl = "http://YOUR_SERVER_IP:8000"; // Replace with your server's IP address
+  static const String baseUrl = "http://localhost:8000"; // Replace with your server's IP address
 
   static Future<bool> signup(String name, String email, String password) async {
     try {

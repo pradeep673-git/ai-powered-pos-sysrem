@@ -8,20 +8,20 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  final TextEditingController nameController = TextEditingController(); // Add this line
+  final TextEditingController nameController = TextEditingController(); 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   void handleSignup() async {
     try {
       final response = await ApiService.signup(
-        nameController.text, // Pass name to signup
+        nameController.text, 
         emailController.text,
         passwordController.text,
       );
-      print(response); // Handle response accordingly
+      print(response); 
     } catch (e) {
-      print(e); // Handle error accordingly
+      print(e); 
     }
   }
 
