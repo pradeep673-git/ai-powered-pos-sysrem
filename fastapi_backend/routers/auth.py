@@ -1,8 +1,8 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
-from database import get_db  # Ensure this points to your database setup file
-from models import User      # Ensure this points to your User model
-from schemas import UserSignup  # Ensure this points to your Pydantic schema for signup
+from database import get_db  # Import database connection setup
+from models import User      # Import SQLAlchemy User model
+from schemas import UserSignup  # Import Pydantic schema for signup
 from passlib.context import CryptContext
 
 router = APIRouter(prefix="/auth", tags=["auth"])
