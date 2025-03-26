@@ -35,26 +35,29 @@
 #     db.refresh(new_user)
 
 #     return {"message": "User created successfully"}
+# fastapi_backend/main.py
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from database import engine, Base  # Import database setup
-from routers import auth  # Import authentication routes
+from database import engine, Base
+from routers import auth
 
 app = FastAPI()
 
+# Add CORS middleware
 origins = [
-    "http://localhost:8000",  # Your Flutter frontend URL
+    "http://localhost:44115/",  # Your Flutter frontend URL
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,  # Allow requests from these origins
+    allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],  # Allow all HTTP methods
+    allow_methods=["*"],  # Allow all methods (GET, POST, OPTIONS, etc.)
     allow_headers=["*"],  # Allow all headers
 )
 
-# Create database tables if they don't exist
+# Create database tables
 Base.metadata.create_all(bind=engine)
 
 # Include authentication routes

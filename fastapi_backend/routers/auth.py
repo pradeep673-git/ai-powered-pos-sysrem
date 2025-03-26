@@ -23,16 +23,32 @@
 #     db.refresh(new_user)
     
 #     return new_user
+
+# fastapi_backend/routers/auth.py
+
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 from database import get_db
 from models import User
 from schemas import UserSignup
 from passlib.context import CryptContext
+from fastapi.responses import JSONResponse
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+@router.options("/signup")
+async def options_signup():
+    return JSONResponse(
+        status_code=200,
+        headers={
+            "Access-Control-Allow-Origin": "http://localhost:44115",
+            "Access-Control-Allow-Methods": "POST, OPTIONS",
+            "Access-Control-Allow-Headers": "*",
+        },
+        content={},
+    )
 
 @router.post("/signup", response_model=UserSignup)
 async def create_user(user: UserSignup, db: Session = Depends(get_db)):
@@ -48,5 +64,3 @@ async def create_user(user: UserSignup, db: Session = Depends(get_db)):
     db.refresh(new_user)
     
     return new_user
-
-
