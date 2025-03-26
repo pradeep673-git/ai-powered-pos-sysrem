@@ -1,9 +1,9 @@
 from pydantic import BaseModel
 
 class UserSignup(BaseModel):
-    name: str  # New field for user name
+    name: str
     email: str
     password: str
 
     class Config:
-        orm_mode = True  # Allows compatibility with SQLAlchemy models.
+        orm_mode = True
