@@ -18,4 +18,46 @@ class ApiService {
 
     return response.statusCode == 201;  // Returns true if signup is successful
   }
+  static Future<void> addInventory(String name, int quantity, String unit) async {
+    final url = Uri.parse('$baseUrl/inventory/add');
+    
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'name': name,
+          'quantity': quantity,
+          'unit': unit,
+        }),
+      );
+
+      if (response.statusCode != 200) {
+        throw Exception('Failed to add item with status code ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to add item: $e');
+    }
+  }
+
+  static Future<void> removeInventory(String name, int quantity) async {
+    final url = Uri.parse('$baseUrl/inventory/remove');
+    
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'name': name,
+          'quantity': quantity,
+        }),
+      );
+
+      if (response.statusCode != 200) {
+        throw Exception('Failed to remove item with status code ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to remove item: $e');
+    }
+  }
 }

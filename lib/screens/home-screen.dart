@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'table-selection-screen.dart';
 import 'kitchen-screen.dart';
+import 'chatbot-screen.dart'; // Importing Chatbot Screen
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,8 +18,7 @@ class HomeScreen extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => TableSelectionScreen()),
+                  MaterialPageRoute(builder: (context) => TableSelectionScreen()),
                 );
               },
             ),
@@ -37,10 +35,13 @@ class HomeScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
             HomeButton(
-              title: "Management",
-              icon: Icons.admin_panel_settings,
+              title: "Chatbot 🤖",
+              icon: Icons.chat,
               onTap: () {
-                // TODO: Add navigation for Management screen
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ChatbotScreen()),
+                );
               },
             ),
           ],
@@ -55,11 +56,7 @@ class HomeButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback onTap;
 
-  const HomeButton(
-      {super.key,
-      required this.title,
-      required this.icon,
-      required this.onTap});
+  HomeButton({required this.title, required this.icon, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -67,11 +64,6 @@ class HomeButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
         textStyle: TextStyle(fontSize: 18),
-        backgroundColor: Colors.red,
-        foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12), // Rounded corners
-        ),
       ),
       onPressed: onTap,
       child: Row(
