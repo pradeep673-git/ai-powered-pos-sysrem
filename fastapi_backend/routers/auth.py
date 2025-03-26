@@ -25,9 +25,9 @@
 #     return new_user
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
-from database import get_db  # Adjust this import based on your structure
-from models import User      # Import SQLAlchemy User model
-from schemas import UserSignup  # Import Pydantic schema for signup
+from database import get_db
+from models import User
+from schemas import UserSignup
 from passlib.context import CryptContext
 
 router = APIRouter(prefix="/auth", tags=["auth"])
@@ -48,3 +48,5 @@ async def create_user(user: UserSignup, db: Session = Depends(get_db)):
     db.refresh(new_user)
     
     return new_user
+
+

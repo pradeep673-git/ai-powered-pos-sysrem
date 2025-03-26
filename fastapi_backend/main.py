@@ -37,26 +37,29 @@
 #     return {"message": "User created successfully"}
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import auth  # Import the auth router
+from database import engine, Base  # Import database setup
+from routers import auth  # Import authentication routes
 
 app = FastAPI()
 
 origins = [
-    "http://localhost:40129",
+    "http://localhost:8000",  # Your Flutter frontend URL
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=origins,  # Allow requests from these origins
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],  # Allow all HTTP methods
+    allow_headers=["*"],  # Allow all headers
 )
 
-# Include authentication routes from auth.py
+# Create database tables if they don't exist
+Base.metadata.create_all(bind=engine)
+
+# Include authentication routes
 app.include_router(auth.router)
 
 @app.get("/")
 def read_root():
     return {"message": "Welcome to AI-Powered POS System"}
-
