@@ -2,10 +2,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from database import engine, Base
 from routers import auth
+from routers import inventory
 
 app = FastAPI()
 
-# Add CORS middleware
 origins = [
     "http://localhost:44115/",  # Your Flutter frontend URL
 ]
@@ -23,7 +23,9 @@ Base.metadata.create_all(bind=engine)
 
 # Include authentication routes
 app.include_router(auth.router)
+app.include_router(inventory.router)
 
 @app.get("/")
 def read_root():
     return {"message": "Welcome to AI-Powered POS System"}
+
